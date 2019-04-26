@@ -116,6 +116,4 @@ lt1  = @d`07:32:00`             % Local Time
 ldt1 = @d`1979-05-27T07:32:00`  % Local Date-Time
 odt1 = @d`1979-05-27T07:32:00Z` % Offset Date-Time
 
-
-
-a = $a
+data = $DateTime
