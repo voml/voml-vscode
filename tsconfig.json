@@ -1,6 +1,6 @@
 {
     "include": [
-        "source"
+        "extension"
     ],
     "compilerOptions": {
         "outDir": "dist",
