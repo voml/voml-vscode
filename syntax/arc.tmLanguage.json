@@ -7,6 +7,26 @@
     ],
     "patterns": [
         {
+            "name": "comment.block.arc",
+            "begin": "(?=[^\\\\])(%%%)",
+            "beginCaptures": {
+                "1": {
+                    "name": "punctuation.definition.comment.block.arc"
+                }
+            },
+            "end": "(%%%)",
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.comment.block.arc"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "text.html.markdown"
+                }
+            ]
+        },
+        {
             "include": "#comment"
         },
         {
