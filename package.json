@@ -3,7 +3,7 @@
 	"displayName": "Arc Language Support",
 	"description": "Highlight and formatter for Arc Readable Configiration",
 	"publisher": "aster",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"icon": "logo.png",
 	"repository": {
 		"type": "git",
@@ -16,7 +16,8 @@
 		"Programming Languages"
 	],
 	"scripts": {
-		"build": "yarn lint && ts-node extension/extension.ts",
+		"postinstall": "node ./node_modules/vscode/bin/install && tsc",
+		"build": "yarn lint && ts-node extension/build.ts",
 		"pack": "yarn build && vsce package",
 		"lint": "tslint **/*.ts --fix"
 	},
@@ -34,14 +35,14 @@
 				"mimetypes": [
 					"text/x-arc"
 				],
-				"configuration": "./extension/arc.configuration.json"
+				"configuration": "./syntax/arc.configuration.json"
 			}
 		],
 		"grammars": [
 			{
 				"language": "arc",
 				"scopeName": "source.arc",
-				"path": "./extension/arc.tmLanguage.json"
+				"path": "./syntax/arc.tmLanguage.json"
 			}
 		]
 	},
@@ -52,5 +53,8 @@
 		"id": "6267dad2-7d52-462a-a1ef-7e3da7378a7d",
 		"publisherDisplayName": "Aster",
 		"publisherId": "3406b78c-f287-4619-8d82-7c97998693e3"
+	},
+	"dependencies": {
+		"vscode": "^1.1.33"
 	}
 }
