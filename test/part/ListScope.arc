@@ -4,9 +4,9 @@
 & "Cherry"
 
 <fruit/detail>
-* name = "Apple"
+^ name = "Apple"
   color = "red"
-* name = "Banana"
+^ name = "Banana"
   color = "yellow"
-* name = "apple"
+^ name = "apple"
   color = "red"

@@ -33,19 +33,19 @@ vscode = '^1.1.33'
 '@types/node' = '^11.13.6'
 
 
-<contributes/languages>
-* id = 'arc'
-  aliases = ['ARC'],
-  extensions = ['.arc']
-  filenames = []
-  mimetypes = ['text/x-arc']
-  configuration = './syntax/arc.configuration.json'
+(contributes/languages/1)
+id = 'arc'
+aliases = ['ARC'],
+extensions = ['.arc']
+filenames = []
+mimetypes = ['text/x-arc']
+configuration = './syntax/arc.configuration.json'
 
 
-<contributes/grammars>
-* language = 'arc'
-  scopeName = 'source.arc'
-  path = './syntax/arc.tmLanguage.json'
+(contributes/grammars/1)
+language = 'arc'
+scopeName = 'source.arc'
+path = './syntax/arc.tmLanguage.json'
 
 
 (__metadata)
