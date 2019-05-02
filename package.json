@@ -3,7 +3,7 @@
 	"displayName": "Arc Language Support",
 	"description": "Highlight and formatter for Arc Readable Configiration",
 	"publisher": "aster",
-	"version": "0.1.3",
+	"version": "0.2.0",
 	"icon": "logo.png",
 	"repository": {
 		"type": "git",
@@ -13,7 +13,8 @@
 		"vscode": "^1.8.0"
 	},
 	"categories": [
-		"Programming Languages"
+		"Programming Languages",
+		"Formatters"
 	],
 	"scripts": {
 		"postinstall": "node ./node_modules/vscode/bin/install && tsc",
@@ -43,6 +44,16 @@
 				"language": "arc",
 				"scopeName": "source.arc",
 				"path": "./syntax/arc.tmLanguage.json"
+			},
+			{
+				"scopeName": "markdown.arc.codeblock",
+				"path": "./syntax/arc.markdown.json",
+				"injectTo": [
+					"text.html.markdown"
+				],
+				"embeddedLanguages": {
+					"meta.embedded.block.arc": "arc"
+				}
 			}
 		]
 	},
