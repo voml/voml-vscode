@@ -1,5 +1,5 @@
 export const comment: any = {
-    match: '\\s*((%).*)$',
+    match: /\s*((%).*)$/.source,
     captures: {
         1: {
             name: 'comment.line.number-sign.arc',
@@ -12,19 +12,16 @@ export const comment: any = {
 
 export const comment_block: any = {
     name: 'comment.block.arc',
-    begin: '(^|\\G)(\\s*)(%{3,})\\s*(?=([^%]*)?$)',
-    end: '(^|\\G)(\\2|\\s{0,3})(\\3)\\s*$',
+    begin: /(?=[^\\])(%%%)/.source,
     beginCaptures: {
-        3: {
-            name: 'punctuation.definition.comment',
-        },
-        4: {
-            name: 'punctuation.definition.comment',
+        1: {
+            name: 'punctuation.definition.comment.block.arc',
         },
     },
+    end: /(%%%)/.source,
     endCaptures: {
-        3: {
-            name: 'punctuation.definition.comment',
+        1: {
+            name: 'punctuation.definition.comment.block.arc',
         },
     },
     patterns: [

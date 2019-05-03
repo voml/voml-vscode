@@ -2,24 +2,27 @@ export const key_value: any = {
     patterns: [
         {
             name: 'invalid.illegal.noKey.arc',
-            match: '(\\s*=.*)$',
+            match: /(\s*=.*)$/.source,
         },
         {
             name: 'invalid.deprecated.noValue.arc',
-            match: '(\\s*[A-Za-z_\\-][A-Za-z0-9_\\-]*\\s*=)(?=\\s*$)',
+            match: /(\s*[A-Za-z_\-][A-Za-z0-9_\-]*\s*=)(?=\s*$)/.source,
         },
         {
             //TODO: Split Nested Key
-            begin: "\\s*([A-Za-z_-][\/A-Za-z0-9_-]*|\".+\"|'.+'|[0-9]+)\\s*(=|:)\\s*",
+            begin: /(\^)?\s*([A-Za-z_-][/A-Za-z0-9_-]*|".+"|'.+'|[0-9]+)\s*(=|:)\s*/.source,
             beginCaptures: {
                 1: {
-                    name: 'entity.name.tag.arc',
+                    name: 'punctuation.definition.newKey.arc',
                 },
                 2: {
+                    name: 'entity.name.tag.arc',
+                },
+                3: {
                     name: 'punctuation.definition.keyValue.arc',
                 },
             },
-            end: '($|(?==)|\\,|\\s*(?=\\}))',
+            end: /($|(?==)|\,|\s*(?=\}))/.source,
             patterns: [
                 {
                     include: '#comment',
@@ -43,7 +46,7 @@ export const key_value: any = {
                     name: 'punctuation.definition.newData.arc',
                 },
             },
-            end: '($|(?==)|\\,|\\s*(?=\\}))',
+            end: /($|(?==)|\,|\s*(?=\}))/.source,
             patterns: [
                 {
                     include: '#comment',

@@ -10,7 +10,7 @@ const escape = [
 ]
 const string_single = {
     name: 'string.quoted.single.basic.line.arc',
-    match: '"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"',
+    match: /"[^"\\]*(?:\\.[^"\\]*)*"/.source,
     patterns: escape,
 }
 const string_block = {
