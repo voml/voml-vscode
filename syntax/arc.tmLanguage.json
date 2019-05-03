@@ -173,6 +173,10 @@
                     ]
                 },
                 {
+                    "name": "punctuation.definition.newKey.arc",
+                    "match": "(?x)([*])"
+                },
+                {
                     "begin": "\\s*(?x)([&])\\s*",
                     "beginCaptures": {
                         "1": {

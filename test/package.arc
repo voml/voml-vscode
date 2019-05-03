@@ -1,4 +1,4 @@
-% 
+% https://github.com/GalAster/vscode-arc/blob/master/package.json
 name = 'vscode-arc'
 displayName = 'Arc Language Support'
 description = 'Highlight and formatter for Arc Readable Configiration'
@@ -9,8 +9,8 @@ engines/vscode = '^1.8.0'
 
 
 <categories>
-& 'Programming Languages'
-& 'Formatters'
+&	'Programming Languages'
+&	'Formatters'
 
 
 (repository)
@@ -33,19 +33,26 @@ vscode = '^1.1.33'
 '@types/node' = '^11.13.6'
 
 
-(contributes/languages/1)
-id = 'arc'
-aliases = ['ARC'],
-extensions = ['.arc']
-filenames = []
-mimetypes = ['text/x-arc']
-configuration = './syntax/arc.configuration.json'
-
-
-(contributes/grammars/1)
-language = 'arc'
-scopeName = 'source.arc'
-path = './syntax/arc.tmLanguage.json'
+(contributes)
+</languages>
+*	id = 'arc'
+	aliases = ['ARC'],
+	extensions = ['.arc']
+	filenames = [ ]
+	mimetypes = ['text/x-arc']
+	configuration = './syntax/arc.configuration.json'
+</grammars>
+*	language = 'arc'
+	scopeName = 'source.arc'
+	path = './syntax/arc.tmLanguage.json'
+*	scopeName = 'markdown.arc.codeblock'
+	path = './syntax/arc.markdown.json'
+	injectTo = [
+		'text.html.markdown',
+	]
+	embeddedLanguages = {
+		'meta.embedded.block.arc' = 'arc',
+	}
 
 
 (__metadata)
