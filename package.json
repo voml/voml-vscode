@@ -25,6 +25,20 @@
 	"contributes": {
 		"languages": [
 			{
+				"id": "arc18",
+				"aliases": [
+					"ARC2018"
+				],
+				"extensions": [
+					".arc18",
+					".tokens"
+				],
+				"filenames": [],
+				"filenamePatterns": [],
+				"mimetypes": [],
+				"configuration": "./syntax/arc.configuration.json"
+			},
+			{
 				"id": "arc",
 				"aliases": [
 					"ARC"
@@ -33,6 +47,7 @@
 					".arc"
 				],
 				"filenames": [],
+				"filenamePatterns": [],
 				"mimetypes": [
 					"text/x-arc"
 				],
@@ -40,6 +55,11 @@
 			}
 		],
 		"grammars": [
+			{
+				"language": "arc18",
+				"scopeName": "source.arc18",
+				"path": "./syntax/arc18.tmLanguage.json"
+			},
 			{
 				"language": "arc",
 				"scopeName": "source.arc",
