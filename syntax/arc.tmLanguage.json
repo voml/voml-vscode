@@ -1,702 +1,605 @@
 {
-	"version": "v2020.2.15",
-	"scopeName": "source.arc",
-	"uuid": "6267dad2-7d52-462a-a1ef-7e3da7378a7e",
-	"information_for_contributors": [
-		"aster: galaster@foxmail.com"
-	],
-	"patterns": [
-		{
-			"include": "#comment"
-		},
-		{
-			"include": "#table"
-		},
-		{
-			"include": "#key_value"
-		}
-	],
-	"repository": {
-		"comment": {
-			"patterns": [
-				{
-					"name": "comment.block.arc",
-					"begin": "(?=[^\\\\])(%%%)",
-					"beginCaptures": {
-						"1": {
-							"name": "punctuation.definition.comment.block.arc"
-						}
-					},
-					"end": "(%%%)",
-					"endCaptures": {
-						"1": {
-							"name": "punctuation.definition.comment.block.arc"
-						}
-					},
-					"patterns": [
-						{
-							"include": "text.html.markdown"
-						}
-					]
-				},
-				{
-					"match": "\\s*((%).*)$",
-					"captures": {
-						"1": {
-							"name": "comment.line.number-sign.arc"
-						},
-						"2": {
-							"name": "punctuation.definition.comment.arc"
-						}
-					}
-				},
-				{
-					"match": "\\s*((\\|).*)$",
-					"captures": {
-						"1": {
-							"name": "string.quoted.single.literal.line.arc"
-						},
-						"2": {
-							"name": "string.quoted.triple.basic.block.arc"
-						}
-					}
-				}
-			]
-		},
-		"table": {
-			"patterns": [
-				{
-					"name": "meta.tag.tuple.arc",
-					"match": "^\\s*(\\[)([^\\[\\]]*)(\\])",
-					"captures": {
-						"1": {
-							"name": "punctuation.definition.tuple.arc"
-						},
-						"2": {
-							"patterns": [
-								{
-									"match": "[^\\s/]+",
-									"name": "entity.other.attribute-name.tuple.arc"
-								}
-							]
-						},
-						"3": {
-							"name": "punctuation.definition.tuple.arc"
-						}
-					}
-				},
-				{
-					"begin": "(?<!\\w)(\\[)\\s*",
-					"beginCaptures": {
-						"1": {
-							"name": "punctuation.definition.tuple.inline.arc"
-						}
-					},
-					"end": "\\s*(\\])(?!\\w)",
-					"endCaptures": {
-						"1": {
-							"name": "punctuation.definition.tuple.inline.arc"
-						}
-					},
-					"patterns": [
-						{
-							"include": "#comment"
-						},
-						{
-							"include": "#data"
-						}
-					]
-				},
-				{
-					"name": "meta.tag.dict.arc",
-					"match": "^\\s*({)([^{}]*)(})",
-					"captures": {
-						"1": {
-							"name": "punctuation.definition.dict.arc"
-						},
-						"2": {
-							"patterns": [
-								{
-									"match": "[^\\s/]+",
-									"name": "entity.other.attribute-name.dict.arc"
-								}
-							]
-						},
-						"3": {
-							"name": "punctuation.definition.dict.arc"
-						}
-					}
-				},
-				{
-					"begin": "(?<!\\w)({)\\s*",
-					"beginCaptures": {
-						"1": {
-							"name": "punctuation.definition.dict.inline.arc"
-						}
-					},
-					"end": "\\s*(})(?!\\w)",
-					"endCaptures": {
-						"1": {
-							"name": "punctuation.definition.dict.inline.arc"
-						}
-					},
-					"patterns": [
-						{
-							"include": "#key_value"
-						},
-						{
-							"include": "#data"
-						}
-					]
-				}
-			]
-		},
-		"key_value": {
-			"patterns": [
-				{
-					"name": "invalid.illegal.noKey.arc",
-					"match": "(\\s*=.*)$"
-				},
-				{
-					"name": "invalid.deprecated.noValue.arc",
-					"match": "(\\s*[A-Za-z_\\-][A-Za-z0-9_\\-]*\\s*=)(?=\\s*$)"
-				},
-				{
-					"begin": "(\\^)?\\s*([A-Za-z_-][\\\\\\/@A-Za-z0-9_-]*|\".+\"|'.+'|[0-9]+)\\s*(=|:)\\s*",
-					"beginCaptures": {
-						"1": {
-							"name": "punctuation.definition.newKey.arc"
-						},
-						"2": {
-							"name": "entity.name.tag.arc"
-						},
-						"3": {
-							"name": "punctuation.definition.keyValue.arc"
-						}
-					},
-					"end": "($|(?==)|\\,|\\s*(?=\\}))",
-					"patterns": [
-						{
-							"include": "#comment"
-						},
-						{
-							"include": "#data"
-						},
-						{
-							"include": "#illegal"
-						}
-					]
-				},
-				{
-					"begin": "(\\^)?\\s*([A-Za-z_-][\\\\\\/@A-Za-z0-9_-]*|\".+\"|'.+'|[0-9]+)\\s*(@[A-Za-z]+)\\s*(=|:)\\s*",
-					"beginCaptures": {
-						"1": {
-							"name": "punctuation.definition.newKey.arc"
-						},
-						"2": {
-							"name": "entity.name.tag.arc"
-						},
-						"3": {
-							"name": "keyword.macro.name.arc"
-						},
-						"4": {
-							"name": "punctuation.definition.keyValue.arc"
-						}
-					},
-					"end": "($|(?==)|\\,|\\s*(?=\\}))",
-					"patterns": [
-						{
-							"include": "#comment"
-						},
-						{
-							"include": "#data"
-						},
-						{
-							"include": "#illegal"
-						}
-					]
-				},
-				{
-					"name": "punctuation.definition.newKey.arc",
-					"match": "(?x)([*])"
-				},
-				{
-					"begin": "\\s*(?x)([>])\\s*",
-					"beginCaptures": {
-						"1": {
-							"name": "punctuation.definition.newData.arc"
-						}
-					},
-					"end": "($|(?==)|\\,|\\s*(?=\\}))",
-					"patterns": [
-						{
-							"include": "#comment"
-						},
-						{
-							"include": "#data"
-						},
-						{
-							"include": "#illegal"
-						}
-					]
-				},
-				{
-					"match": "\\s*(?x)([-])(.*)$",
-					"captures": {
-						"1": {
-							"name": "punctuation.definition.newData.arc"
-						},
-						"2": {
-							"name": "string.quoted.single.literal.line.arc"
-						}
-					}
-				}
-			]
-		},
-		"data": {
-			"patterns": [
-				{
-					"begin": "(?<!\\w)(\\{)\\s*",
-					"beginCaptures": {
-						"1": {
-							"name": "punctuation.definition.dict.inline.arc"
-						}
-					},
-					"end": "\\s*(\\})(?!\\w)",
-					"endCaptures": {
-						"1": {
-							"name": "punctuation.definition.dict.inline.arc"
-						}
-					},
-					"patterns": [
-						{
-							"include": "#key_value"
-						},
-						{
-							"include": "#data"
-						}
-					]
-				},
-				{
-					"begin": "(?<!\\w)(\\[)\\s*",
-					"beginCaptures": {
-						"1": {
-							"name": "punctuation.definition.tuple.inline.arc"
-						}
-					},
-					"end": "\\s*(\\])(?!\\w)",
-					"endCaptures": {
-						"1": {
-							"name": "punctuation.definition.tuple.inline.arc"
-						}
-					},
-					"patterns": [
-						{
-							"include": "#comment"
-						},
-						{
-							"include": "#data"
-						}
-					]
-				},
-				{
-					"name": "string.quoted.triple.literal.block.arc",
-					"begin": "\\b(dt|datetime)(\\')",
-					"beginCaptures": {
-						"1": {
-							"name": "keyword.macro.name.arc"
-						},
-						"2": {
-							"name": "string.quoted.triple.literal.block.arc"
-						}
-					},
-					"end": "(\\')",
-					"endCaptures": {
-						"1": {
-							"name": "string.quoted.triple.literal.block.arc"
-						}
-					},
-					"patterns": [
-						{
-							"include": "#macro:datetime"
-						}
-					]
-				},
-				{
-					"match": "\\b(dt|datetime)(\\|)(.*)$",
-					"captures": {
-						"1": {
-							"name": "keyword.macro.name.arc"
-						},
-						"2": {
-							"name": "punctuation.definition.macro.arc"
-						},
-						"3": {
-							"patterns": [
-								{
-									"include": "#macro:datetime"
-								}
-							]
-						}
-					}
-				},
-				{
-					"match": "\\b(ip)(\\|)(.*)$",
-					"captures": {
-						"1": {
-							"name": "keyword.macro.name.arc"
-						},
-						"2": {
-							"name": "punctuation.definition.macro.arc"
-						},
-						"3": {
-							"patterns": [
-								{
-									"include": "#macro:ip"
-								}
-							]
-						}
-					}
-				},
-				{
-					"match": "\\b(re|regex)(\\|)(.*)$",
-					"captures": {
-						"1": {
-							"name": "punctuation.definition.macro.arc"
-						},
-						"2": {
-							"name": "keyword.macro.name.arc"
-						},
-						"3": {
-							"patterns": [
-								{
-									"include": "#macro:regex"
-								}
-							]
-						}
-					}
-				},
-				{
-					"match": "(\\w+)(\\|)(.*)$",
-					"captures": {
-						"1": {
-							"name": "punctuation.definition.macro.arc"
-						},
-						"2": {
-							"name": "keyword.macro.name.arc"
-						},
-						"3": {
-							"name": "string.quoted.single.basic.line.arc"
-						}
-					}
-				},
-				{
-					"name": "string.quoted.triple.basic.block.arc",
-					"begin": "\"\"\"",
-					"end": "\"\"\"",
-					"patterns": [
-						{
-							"match": "\\\\([btnfr\"/\\\\\\n]|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})",
-							"name": "constant.character.escape.arc"
-						},
-						{
-							"match": "\\\\[^btnfr\"/\\\\\\n]",
-							"name": "invalid.illegal.escape.arc"
-						}
-					]
-				},
-				{
-					"name": "string.quoted.single.basic.line.arc",
-					"match": "\"[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*\"",
-					"patterns": [
-						{
-							"match": "\\\\([btnfr\"/\\\\\\n]|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})",
-							"name": "constant.character.escape.arc"
-						},
-						{
-							"match": "\\\\[^btnfr\"/\\\\\\n]",
-							"name": "invalid.illegal.escape.arc"
-						}
-					]
-				},
-				{
-					"name": "string.quoted.triple.literal.block.arc",
-					"begin": "'''",
-					"end": "'''"
-				},
-				{
-					"name": "string.quoted.single.literal.line.arc",
-					"match": "'.*?'"
-				},
-				{
-					"match": "([$])([A-Za-z_][A-Za-z0-9_.]*)",
-					"captures": {
-						"1": {
-							"name": "punctuation.definition.cite.arc"
-						},
-						"2": {
-							"name": "support.function.cite.arc"
-						}
-					}
-				},
-				{
-					"match": "(?i)(?<!\\w)(true)(?!\\w)",
-					"captures": {
-						"1": {
-							"name": "keyword.constant.true.arc"
-						}
-					}
-				},
-				{
-					"match": "(?i)(?<!\\w)(false)(?!\\w)",
-					"captures": {
-						"1": {
-							"name": "keyword.constant.false.arc"
-						}
-					}
-				},
-				{
-					"match": "(?i)(?<!\\w)(null)(?!\\w)",
-					"captures": {
-						"1": {
-							"name": "keyword.constant.null.arc"
-						}
-					}
-				},
-				{
-					"match": "(?i)(?<!\\w)([\\+\\-]?nan)(?!\\w)",
-					"captures": {
-						"1": {
-							"name": "keyword.constant.nan.arc"
-						}
-					}
-				},
-				{
-					"match": "(?i)(?<!\\w)([\\+\\-]?infinity)(?!\\w)",
-					"captures": {
-						"1": {
-							"name": "keyword.constant.infinity.arc"
-						}
-					}
-				},
-				{
-					"match": "(?<!\\w)([\\+\\-]?(0|([1-9](([0-9]|_[0-9])+)?))(?:(?:\\.(0|([1-9](([0-9]|_[0-9])+)?)))?[eE][\\+\\-]?[1-9]_?[0-9]*|(?:\\.[0-9_]*)))(?!\\w)",
-					"captures": {
-						"1": {
-							"name": "constant.numeric.float.arc"
-						}
-					}
-				},
-				{
-					"match": "(?<!\\w)((?:[\\+\\-]?(0|([1-9](([0-9]|_[0-9])+)?))))(?!\\w)",
-					"captures": {
-						"1": {
-							"name": "constant.numeric.integer.arc"
-						}
-					}
-				}
-			]
-		},
-		"macro:ip": {
-			"patterns": [
-				{
-					"name": "constant.other.ip.4.arc",
-					"match": "((25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)"
-				},
-				{
-					"name": "constant.other.ip.6.arc",
-					"match": "([\\da-fA-F]{1,4}:){7}[\\da-fA-F]{1,4}"
-				},
-				{
-					"include": "#illegal"
-				}
-			]
-		},
-		"macro:datetime": {
-			"patterns": [
-				{
-					"match": "(?<!\\w)(\\d{4}\\-\\d{2}\\-\\d{2}[T| ]\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[\\+\\-]\\d{2}:\\d{2}))(?!\\w)",
-					"name": "constant.other.datetime.offset.arc"
-				},
-				{
-					"name": "constant.other.datetime.local.arc",
-					"match": "\\d{4}\\-\\d{2}\\-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?"
-				},
-				{
-					"match": "\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?",
-					"name": "constant.other.time.arc"
-				},
-				{
-					"match": "\\d{4}\\-\\d{2}\\-\\d{2}",
-					"name": "constant.other.date.arc"
-				}
-			]
-		},
-		"macro:regex": {
-			"patterns": [
-				{
-					"name": "keyword.control.anchor.regexp",
-					"match": "\\\\[bB]|\\^|\\$"
-				},
-				{
-					"match": "\\\\[1-9]\\d*|\\\\k<([a-zA-Z_$][\\w$]*)>",
-					"captures": {
-						"0": {
-							"name": "keyword.other.back-reference.regexp"
-						},
-						"1": {
-							"name": "variable.other.regexp"
-						}
-					}
-				},
-				{
-					"name": "keyword.operator.quantifier.regexp",
-					"match": "[?+*]|\\{(\\d+,\\d+|\\d+,|,\\d+|\\d+)\\}\\??"
-				},
-				{
-					"name": "keyword.operator.or.regexp",
-					"match": "\\|"
-				},
-				{
-					"name": "meta.group.assertion.regexp",
-					"begin": "(\\()((\\?=)|(\\?!)|(\\?<=)|(\\?<!))",
-					"beginCaptures": {
-						"1": {
-							"name": "punctuation.definition.group.regexp"
-						},
-						"2": {
-							"name": "punctuation.definition.group.assertion.regexp"
-						},
-						"3": {
-							"name": "meta.assertion.look-ahead.regexp"
-						},
-						"4": {
-							"name": "meta.assertion.negative-look-ahead.regexp"
-						},
-						"5": {
-							"name": "meta.assertion.look-behind.regexp"
-						},
-						"6": {
-							"name": "meta.assertion.negative-look-behind.regexp"
-						}
-					},
-					"end": "\\)",
-					"endCaptures": {
-						"0": {
-							"name": "punctuation.definition.group.regexp"
-						}
-					},
-					"patterns": [
-						{
-							"include": "#macro:regex"
-						}
-					]
-				},
-				{
-					"name": "meta.group.regexp",
-					"begin": "\\((?:(\\?:)|(?:\\?<([a-zA-Z_$][\\w$]*)>))?",
-					"beginCaptures": {
-						"0": {
-							"name": "punctuation.definition.group.regexp"
-						},
-						"1": {
-							"name": "punctuation.definition.group.no-capture.regexp"
-						},
-						"2": {
-							"name": "variable.other.regexp"
-						}
-					},
-					"end": "\\)",
-					"endCaptures": {
-						"0": {
-							"name": "punctuation.definition.group.regexp"
-						}
-					},
-					"patterns": [
-						{
-							"include": "#macro:regex"
-						}
-					]
-				},
-				{
-					"name": "constant.other.character-class.set.regexp",
-					"begin": "(\\[)(\\^)?",
-					"beginCaptures": {
-						"1": {
-							"name": "punctuation.definition.character-class.regexp"
-						},
-						"2": {
-							"name": "keyword.operator.negation.regexp"
-						}
-					},
-					"end": "(\\])",
-					"endCaptures": {
-						"1": {
-							"name": "punctuation.definition.character-class.regexp"
-						}
-					},
-					"patterns": [
-						{
-							"name": "constant.other.character-class.range.regexp",
-							"match": "(?:.|(\\\\(?:[0-7]{3}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}))|(\\\\c[A-Z])|(\\\\.))\\-(?:[^\\]\\\\]|(\\\\(?:[0-7]{3}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}))|(\\\\c[A-Z])|(\\\\.))",
-							"captures": {
-								"1": {
-									"name": "constant.character.numeric.regexp"
-								},
-								"2": {
-									"name": "constant.character.control.regexp"
-								},
-								"3": {
-									"name": "constant.character.escape.backslash.regexp"
-								},
-								"4": {
-									"name": "constant.character.numeric.regexp"
-								},
-								"5": {
-									"name": "constant.character.control.regexp"
-								},
-								"6": {
-									"name": "constant.character.escape.backslash.regexp"
-								}
-							}
-						},
-						{
-							"include": "#regex-character-class"
-						}
-					]
-				},
-				{
-					"include": "#regex-character-class"
-				}
-			]
-		},
-		"regex-character-class": {
-			"patterns": [
-				{
-					"name": "constant.other.character-class.regexp",
-					"match": "\\\\[wWsSdDtrnvf]|\\."
-				},
-				{
-					"name": "constant.character.numeric.regexp",
-					"match": "\\\\([0-7]{3}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4})"
-				},
-				{
-					"name": "constant.character.control.regexp",
-					"match": "\\\\c[A-Z]"
-				},
-				{
-					"name": "constant.character.escape.backslash.regexp",
-					"match": "\\\\."
-				}
-			]
-		},
-		"illegal": {
-			"captures": {
-				"1": {
-					"name": "invalid.illegal.arc"
-				}
-			},
-			"match": "(.*)"
-		}
-	}
+    "version": "v0.1.1",
+    "scopeName": "source.arc",
+    "uuid": "6267dad2-7d52-462a-a1ef-7e3da7378a7d",
+    "information_for_contributors": [
+        "aster: galaster@foxmail.com"
+    ],
+    "patterns": [
+        {
+            "name": "comment.block.arc",
+            "begin": "(?=[^\\\\])(%%%)",
+            "beginCaptures": {
+                "1": {
+                    "name": "punctuation.definition.comment.block.arc"
+                }
+            },
+            "end": "(%%%)",
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.comment.block.arc"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "text.html.markdown"
+                }
+            ]
+        },
+        {
+            "include": "#comment"
+        },
+        {
+            "include": "#table"
+        },
+        {
+            "include": "#key_value"
+        }
+    ],
+    "repository": {
+        "comment": {
+            "match": "\\s*((%).*)$",
+            "captures": {
+                "1": {
+                    "name": "comment.line.number-sign.arc"
+                },
+                "2": {
+                    "name": "punctuation.definition.comment.arc"
+                }
+            }
+        },
+        "table": {
+            "patterns": [
+                {
+                    "begin": "(?<!\\w)(\\[)\\s*",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.tuple.inline.arc"
+                        }
+                    },
+                    "end": "\\s*(\\])(?!\\w)",
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.tuple.inline.arc"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#comment"
+                        },
+                        {
+                            "include": "#data"
+                        }
+                    ]
+                },
+                {
+                    "name": "meta.tag.tuple.arc",
+                    "match": "^\\s*(<)([^<>]*)(>)",
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.tuple.arc"
+                        },
+                        "2": {
+                            "patterns": [
+                                {
+                                    "match": "[^\\s/]+",
+                                    "name": "entity.other.attribute-name.tuple.arc"
+                                }
+                            ]
+                        },
+                        "3": {
+                            "name": "punctuation.definition.tuple.arc"
+                        }
+                    }
+                },
+                {
+                    "begin": "(?<!\\w)(\\{)\\s*",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.dict.inline.arc"
+                        }
+                    },
+                    "end": "\\s*(\\})(?!\\w)",
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.dict.inline.arc"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#key_value"
+                        },
+                        {
+                            "include": "#data"
+                        }
+                    ]
+                },
+                {
+                    "name": "meta.tag.dict.arc",
+                    "match": "^\\s*(\\()([^\\(\\)]*)(\\))",
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.dict.arc"
+                        },
+                        "2": {
+                            "patterns": [
+                                {
+                                    "match": "[^\\s/]+",
+                                    "name": "entity.other.attribute-name.dict.arc"
+                                }
+                            ]
+                        },
+                        "3": {
+                            "name": "punctuation.definition.dict.arc"
+                        }
+                    }
+                }
+            ]
+        },
+        "key_value": {
+            "patterns": [
+                {
+                    "name": "invalid.illegal.noKey.arc",
+                    "match": "(\\s*=.*)$"
+                },
+                {
+                    "name": "invalid.deprecated.noValue.arc",
+                    "match": "(\\s*[A-Za-z_\\-][A-Za-z0-9_\\-]*\\s*=)(?=\\s*$)"
+                },
+                {
+                    "begin": "(\\^)?\\s*([A-Za-z_-][\\\\/@A-Za-z0-9_-]*|\".+\"|'.+'|[0-9]+)\\s*(=|:)\\s*",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.newKey.arc"
+                        },
+                        "2": {
+                            "name": "entity.name.tag.arc"
+                        },
+                        "3": {
+                            "name": "punctuation.definition.keyValue.arc"
+                        }
+                    },
+                    "end": "($|(?==)|\\,|\\s*(?=\\}))",
+                    "patterns": [
+                        {
+                            "include": "#comment"
+                        },
+                        {
+                            "include": "#data"
+                        },
+                        {
+                            "include": "#illegal"
+                        }
+                    ]
+                },
+                {
+                    "begin": "(\\^)?\\s*([A-Za-z_-][\\\\/@A-Za-z0-9_-]*|\".+\"|'.+'|[0-9]+)\\s*(@[A-Za-z]+)\\s*(=|:)\\s*",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.newKey.arc"
+                        },
+                        "2": {
+                            "name": "entity.name.tag.arc"
+                        },
+                        "3": {
+                            "name": "keyword.macro.name.arc"
+                        },
+                        "4": {
+                            "name": "punctuation.definition.keyValue.arc"
+                        }
+                    },
+                    "end": "($|(?==)|\\,|\\s*(?=\\}))",
+                    "patterns": [
+                        {
+                            "include": "#comment"
+                        },
+                        {
+                            "include": "#data"
+                        },
+                        {
+                            "include": "#illegal"
+                        }
+                    ]
+                },
+                {
+                    "name": "punctuation.definition.newKey.arc",
+                    "match": "(?x)([*])"
+                },
+                {
+                    "begin": "\\s*(?x)([&])\\s*",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.newData.arc"
+                        }
+                    },
+                    "end": "($|(?==)|\\,|\\s*(?=\\}))",
+                    "patterns": [
+                        {
+                            "include": "#comment"
+                        },
+                        {
+                            "include": "#data"
+                        },
+                        {
+                            "include": "#illegal"
+                        }
+                    ]
+                }
+            ]
+        },
+        "data": {
+            "patterns": [
+                {
+                    "begin": "(?<!\\w)(\\{)\\s*",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.dict.inline.arc"
+                        }
+                    },
+                    "end": "\\s*(\\})(?!\\w)",
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.dict.inline.arc"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#key_value"
+                        },
+                        {
+                            "include": "#data"
+                        }
+                    ]
+                },
+                {
+                    "begin": "(?<!\\w)(\\[)\\s*",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.tuple.inline.arc"
+                        }
+                    },
+                    "end": "\\s*(\\])(?!\\w)",
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.tuple.inline.arc"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#comment"
+                        },
+                        {
+                            "include": "#data"
+                        }
+                    ]
+                },
+                {
+                    "name": "string.quoted.triple.literal.block.arc",
+                    "begin": "(@)(d|date)(\"\"\"|\")",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "keyword.macro.punctuation.arc"
+                        },
+                        "2": {
+                            "name": "keyword.macro.name.arc"
+                        },
+                        "3": {
+                            "name": "string.quoted.triple.literal.block.arc"
+                        }
+                    },
+                    "end": "(\"\"\"|\")",
+                    "endCaptures": {
+                        "1": {
+                            "name": "string.quoted.triple.literal.block.arc"
+                        }
+                    }
+                },
+                {
+                    "match": "(@)(d|date)(''')(.*?)(''')",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.macro.punctuation.arc"
+                        },
+                        "2": {
+                            "name": "keyword.macro.name.arc"
+                        },
+                        "3": {
+                            "name": "punctuation.definition.macro.arc"
+                        },
+                        "4": {
+                            "patterns": [
+                                {
+                                    "match": "(?<!\\w)(\\d{4}\\-\\d{2}\\-\\d{2}[T| ]\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[\\+\\-]\\d{2}:\\d{2}))(?!\\w)",
+                                    "name": "constant.other.datetime.offset.arc"
+                                },
+                                {
+                                    "name": "constant.other.datetime.local.arc",
+                                    "match": "\\d{4}\\-\\d{2}\\-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?"
+                                },
+                                {
+                                    "match": "\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?",
+                                    "name": "constant.other.time.arc"
+                                },
+                                {
+                                    "match": "\\d{4}\\-\\d{2}\\-\\d{2}",
+                                    "name": "constant.other.date.arc"
+                                }
+                            ]
+                        },
+                        "5": {
+                            "name": "keyword.macro.punctuation.arc"
+                        }
+                    }
+                },
+                {
+                    "match": "(@)(d|date)(')(.*?)(')",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.macro.punctuation.arc"
+                        },
+                        "2": {
+                            "name": "keyword.macro.name.arc"
+                        },
+                        "3": {
+                            "name": "punctuation.definition.macro.arc"
+                        },
+                        "4": {
+                            "patterns": [
+                                {
+                                    "match": "(?<!\\w)(\\d{4}\\-\\d{2}\\-\\d{2}[T| ]\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[\\+\\-]\\d{2}:\\d{2}))(?!\\w)",
+                                    "name": "constant.other.datetime.offset.arc"
+                                },
+                                {
+                                    "name": "constant.other.datetime.local.arc",
+                                    "match": "\\d{4}\\-\\d{2}\\-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?"
+                                },
+                                {
+                                    "match": "\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?",
+                                    "name": "constant.other.time.arc"
+                                },
+                                {
+                                    "match": "\\d{4}\\-\\d{2}\\-\\d{2}",
+                                    "name": "constant.other.date.arc"
+                                }
+                            ]
+                        },
+                        "5": {
+                            "name": "keyword.macro.punctuation.arc"
+                        }
+                    }
+                },
+                {
+                    "match": "(@)(d|date)",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.macro.punctuation.arc"
+                        },
+                        "2": {
+                            "name": "keyword.macro.name.arc"
+                        }
+                    }
+                },
+                {
+                    "match": "(@)(ip)(')(.*?)(')",
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.macro.arc"
+                        },
+                        "2": {
+                            "name": "keyword.macro.name.arc"
+                        },
+                        "3": {
+                            "name": "punctuation.definition.macro.arc"
+                        },
+                        "4": {
+                            "patterns": [
+                                {
+                                    "name": "constant.other.ip.4.arc",
+                                    "match": "((25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)"
+                                },
+                                {
+                                    "name": "constant.other.ip.6.arc",
+                                    "match": "([\\da-fA-F]{1,4}:){7}[\\da-fA-F]{1,4}"
+                                },
+                                {
+                                    "include": "#illegal"
+                                }
+                            ]
+                        },
+                        "5": {
+                            "name": "punctuation.definition.macro.arc"
+                        }
+                    }
+                },
+                {
+                    "begin": "(@)(re)(`)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.macro.arc"
+                        },
+                        "2": {
+                            "name": "keyword.macro.name.arc"
+                        },
+                        "3": {
+                            "name": "punctuation.definition.macro.arc"
+                        }
+                    },
+                    "end": "(`)",
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.macro.arc"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "source.js.regexp"
+                        }
+                    ]
+                },
+                {
+                    "match": "(@)(re)('''.*?''')",
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.macro.arc"
+                        },
+                        "2": {
+                            "name": "keyword.macro.name.arc"
+                        },
+                        "3": {
+                            "name": "string.quoted.triple.literal.block.arc"
+                        }
+                    }
+                },
+                {
+                    "begin": "(@)(csv)(''')",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "keyword.macro.punctuation.arc"
+                        },
+                        "2": {
+                            "name": "keyword.macro.name.arc"
+                        },
+                        "3": {
+                            "name": "punctuation.definition.macro.arc"
+                        }
+                    },
+                    "end": "(''')",
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.macro.arc"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "source.csv"
+                        }
+                    ]
+                },
+                {
+                    "match": "(@)(csv)",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.macro.punctuation.arc"
+                        },
+                        "2": {
+                            "name": "keyword.macro.name.arc"
+                        }
+                    }
+                },
+                {
+                    "name": "string.quoted.triple.basic.block.arc",
+                    "begin": "\"\"\"",
+                    "end": "\"\"\"",
+                    "patterns": [
+                        {
+                            "match": "\\\\([btnfr\"/\\\\\\n]|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})",
+                            "name": "constant.character.escape.arc"
+                        },
+                        {
+                            "match": "\\\\[^btnfr\"/\\\\\\n]",
+                            "name": "invalid.illegal.escape.arc"
+                        }
+                    ]
+                },
+                {
+                    "name": "string.quoted.single.basic.line.arc",
+                    "match": "\"[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*\"",
+                    "patterns": [
+                        {
+                            "match": "\\\\([btnfr\"/\\\\\\n]|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})",
+                            "name": "constant.character.escape.arc"
+                        },
+                        {
+                            "match": "\\\\[^btnfr\"/\\\\\\n]",
+                            "name": "invalid.illegal.escape.arc"
+                        }
+                    ]
+                },
+                {
+                    "name": "string.quoted.triple.literal.block.arc",
+                    "begin": "'''",
+                    "end": "'''"
+                },
+                {
+                    "name": "string.quoted.single.literal.line.arc",
+                    "match": "'.*?'"
+                },
+                {
+                    "match": "([$])([A-Za-z_-][\\\\/*A-Za-z0-9_-]*)",
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.cite.arc"
+                        },
+                        "2": {
+                            "name": "support.function.cite.arc"
+                        }
+                    }
+                },
+                {
+                    "match": "(?i)(?<!\\w)(true)(?!\\w)",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.constant.true.arc"
+                        }
+                    }
+                },
+                {
+                    "match": "(?i)(?<!\\w)(false)(?!\\w)",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.constant.false.arc"
+                        }
+                    }
+                },
+                {
+                    "match": "(?i)(?<!\\w)(null)(?!\\w)",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.constant.null.arc"
+                        }
+                    }
+                },
+                {
+                    "match": "(?i)(?<!\\w)([\\+\\-]?nan)(?!\\w)",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.constant.nan.arc"
+                        }
+                    }
+                },
+                {
+                    "match": "(?i)(?<!\\w)([\\+\\-]?infinity)(?!\\w)",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.constant.infinity.arc"
+                        }
+                    }
+                },
+                {
+                    "match": "(?<!\\w)([\\+\\-]?(0|([1-9](([0-9]|_[0-9])+)?))(?:(?:\\.(0|([1-9](([0-9]|_[0-9])+)?)))?[eE][\\+\\-]?[1-9]_?[0-9]*|(?:\\.[0-9_]*)))(?!\\w)",
+                    "captures": {
+                        "1": {
+                            "name": "constant.numeric.float.arc"
+                        }
+                    }
+                },
+                {
+                    "match": "(?<!\\w)((?:[\\+\\-]?(0|([1-9](([0-9]|_[0-9])+)?))))(?!\\w)",
+                    "captures": {
+                        "1": {
+                            "name": "constant.numeric.integer.arc"
+                        }
+                    }
+                }
+            ]
+        },
+        "illegal": {
+            "captures": {
+                "1": {
+                    "name": "invalid.illegal.arc"
+                }
+            },
+            "match": "(.*)"
+        }
+    }
 }
