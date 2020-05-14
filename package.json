@@ -25,7 +25,8 @@
 		"postinstall": "node ./node_modules/vscode/bin/install && tsc",
 		"build": "yarn lint && ts-node syntax/build.ts && tsc",
 		"pack": "yarn build && vsce package",
-		"lint": "tslint **/*.ts --fix"
+		"lint": "tslint **/*.ts --fix",
+		"reset": "git reset Head~ --soft"
 	},
 	"contributes": {
 		"languages": [

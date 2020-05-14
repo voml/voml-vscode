@@ -4,8 +4,9 @@
 .vs
 
 # Node
-node_modules
+node_modules/**
 yarn.lock
+dist/**
 
 # Release
 *.vsix

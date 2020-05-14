@@ -2,41 +2,28 @@
 % Using `%` starts line comment
 %%%
 *here is a markdown note*
-**let's set some meta info**
-*`$` means Unique*
-- $version = 1.0 
-*`@` means Changeable*
-- @align-comment = true
-- @empty-line = 2
 %%%
 
 
-(Number)
+{literal.integer}
 int1 =+99
 int2 = 42
 int3 = 0
 int4 =-17
-int5 = 1___000     % ❌
-int6 = 5_349_221_  % ❌
-int7 = 1_2_3_4_5
-% fractional
+int5 = 1_000
+int6 = 1_2_3_4_5
+
+{literal.decimal}
 flt1 = 0.
 flt2 =-0.0_2
 flt3 =+5_0.
 flt4 = 3.1415
 flt5 =-0.01
 flt6 = 224_617.445_991_228
-% infinity
-sf1 = infinity % positive infinity
-sf2 =+Infinity % positive infinity
-sf3 =-INFINITY % negative infinity
-% not a number
-sf4 = nan % actual sNaN/qNaN encoding is implementation specific
-sf5 =+NaN % same as `nan`
-sf6 =-NAN % valid, actual encoding is implementation specific
 
 
-(String)
+{string}
+char = `2`
 singleline = "This is a string."
 multiline = """
 \b     - backspace       (U+0008)
@@ -62,7 +49,8 @@ literal = '''
 \u1234 - unicode         (U+1234)
 '''
 
-(Array)
+
+{list.inline}
 arr1 = [1, 2, 3]
 arr2 = ["red", "yellow", "green"]
 arr3 = [[1, 2], [3, 4, 5]]
@@ -72,23 +60,27 @@ arr5 = [
     ["a", "b", "c"]
 ]
 arr6 = [1, 2.0]
-
-
-(fruit)
-name = "apple"
-inlineTable = [
+inline = [
     { x = 1, y = 2, z = 3 },
     { x = 7, y = 5, z = 9 },
     { x = 2, y = 4, z = 8 },
 ]
 
+%===========================================================================================
 
-<fruit>
-& "Apple"
-& "Banana"
-& "Cherry"
+#!
 
-<fruit/detail>
+[list.scope.insert]
+> 42
+> 'string'
+> [true, false, null]
+
+[list.scope.string]
+- Apple
+- Banana
+- Cherry
+
+[list.scope.dict]
 * name = "Apple"
   color = "red"
 * name = "Banana"
@@ -96,30 +88,64 @@ inlineTable = [
 * name = "apple"
   color = "red"
 
-
-(servers)
-(servers/alpha)
-ip = @ip`192.168.255.1`
-pw = "力微任重久神疲"
-(servers/beta)
-ip = @ip`192.168.256.1` % ❌
-pw = "再竭衰庸定不支"
-(servers/meta)
-ip = [
-    $servers/alpha/ip,
-    $servers/beta/ip
+% expand above syntax
+{list.scope.expand}
+insert = [42, 'string', [true, false, null]]
+string = ['Apple', 'Banana', 'Cherry']
+dict = [
+    {name = 'Apple', color = 'red'},
+    {name = 'Banana', color = 'yellow'},
+    {name = 'apple', color = 'red'}
 ]
-pw = $servers/*/pw
+
+%===========================================================================================
+
+{dict.server}
+{^meta}
+ip = [
+    $dict.server.alpha.ip
+    $dict.server.beta.ip
+]
+{:alpha}  % child node
+id = 10000
+pw = "力微任重久神疲"
+{:beta}   % child node at same level
+id = 10001
+pw = "再竭衰庸定不支"
+
+% expand above syntax
+{dict.server.expand}
+
+%===========================================================================================
 
 
-(DateTime)
-ld1  = @d`1979-05-27`           % Local Date
-lt1  = @d`07:32:00`             % Local Time
-ldt1 = @d`1979-05-27T07:32:00`  % Local Date-Time
-odt1 = @d`1979-05-27T07:32:00Z` % Offset Date-Time
-odt2 = @d'''1979-05-27T07:32:00Z'''
+{version}
+alias = 'v|version'
+eg1.input = v|1.0.0
+eg1.expand = {
+    major = 1u64
+    mino = 0u64
+    patch = 0u64
+}
 
 
-(Regex)
-ipv4 = @re`^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$`
-ipv6 = @re`^([\da-fA-F]{1,4}:){7}[\da-fA-F]{1,4}$`
+{DateTime}
+ld1  = dt'1979-05-27'           % Local Date
+lt1  = dt'07:32:00'             % Local Time
+ldt1 = dt'1979-05-27T07:32:00'  % Local Date-Time
+odt1 = dt'1979-05-27T07:32:00Z' % Offset Date-Time
+odt2 = dt'1979-05-27T07:32:00X'
+
+
+{Regex}
+ipv4 = re|(\^)?\s*([A-Za-z_-][\\/@A-Za-z0-9_-]*|".+"|'.+'|[0-9]+)\s*(@[A-Za-z]+)\s*(=|:)\s*
+ipv6 = re|^([\da-fA-F]{1,4}:){7}[\da-fA-F]{1,4}$
+
+
+
+{Embed}
+table = csv```
+a,1
+```
+
+
