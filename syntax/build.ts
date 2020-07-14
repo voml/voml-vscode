@@ -1,5 +1,5 @@
 import { writeFileSync } from 'fs'
-import { data, comment, table, key_value, illegal, comment_block } from '../source'
+import { data, comment, table, key_value, illegal } from '../source'
 function including(_: string) { return { include: '#' + _ } }
 
 const syntax = {
@@ -10,7 +10,6 @@ const syntax = {
         'aster: galaster@foxmail.com',
     ],
     patterns: [
-        comment_block,
         including('comment'),
         including('table'),
         including('key_value'),

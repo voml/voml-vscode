@@ -5,7 +5,7 @@
 %%%
 
 
-{literal.integer}
+[literal.integer]
 int1 =+99
 int2 = 42
 int3 = 0
@@ -13,7 +13,7 @@ int4 =-17
 int5 = 1_000
 int6 = 1_2_3_4_5
 
-{literal.decimal}
+[literal.decimal]
 flt1 = 0.
 flt2 =-0.0_2
 flt3 =+5_0.
@@ -22,7 +22,7 @@ flt5 =-0.01
 flt6 = 224_617.445_991_228
 
 
-{string}
+[string]
 char = `2`
 singleline = "This is a string."
 multiline = """
@@ -68,7 +68,7 @@ inline = [
 
 %===========================================================================================
 
-#!
+
 
 [list.scope.insert]
 > 42

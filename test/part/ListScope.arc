@@ -1,7 +1,7 @@
 <fruit>
-& "Apple"
-& "Banana"
-& "Cherry"
+* "Apple"
+* "Banana"
+* "Cherry"
 
 <fruit/detail>
 ^ name = "Apple"
