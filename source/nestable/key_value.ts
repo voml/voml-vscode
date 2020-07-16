@@ -43,7 +43,7 @@ export const key_value: any = {
             match: '(?x)([*])',
         },
         {
-            begin: '\\s*(?x)([&])\\s*',
+            begin: '\\s*(?x)([*])\\s*',
             beginCaptures: {
                 1: { name: 'punctuation.definition.newData.arc' },
             },

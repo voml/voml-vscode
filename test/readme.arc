@@ -1,3 +1,6 @@
+import "package.json" as package
+import json "package.json" as pkg
+
 % This is a Arc example document.
 % Using `%` starts line comment
 %%%
@@ -70,26 +73,26 @@ inline = [
 
 
 
-[list.scope.insert]
-> 42
-> 'string'
-> [true, false, null]
+<list.scope.insert>
+* 42
+* 'string'
+* [true, false, null]
 
-[list.scope.string]
-- Apple
-- Banana
-- Cherry
+<list.scope.string>
+* Apple
+* Banana
+* Cherry
 
-[list.scope.dict]
-* name = "Apple"
+<list.scope.dict>
+^ name = "Apple"
   color = "red"
-* name = "Banana"
+^ name = "Banana"
   color = "yellow"
-* name = "apple"
+^ name = "apple"
   color = "red"
 
 % expand above syntax
-{list.scope.expand}
+[list.scope.expand]
 insert = [42, 'string', [true, false, null]]
 string = ['Apple', 'Banana', 'Cherry']
 dict = [
@@ -100,26 +103,26 @@ dict = [
 
 %===========================================================================================
 
-{dict.server}
-{^meta}
+[dict.server]
+[.meta]
 ip = [
     $dict.server.alpha.ip
     $dict.server.beta.ip
 ]
-{:alpha}  % child node
+[.alpha]  % child node
 id = 10000
 pw = "力微任重久神疲"
-{:beta}   % child node at same level
+[.beta]   % child node at same level
 id = 10001
 pw = "再竭衰庸定不支"
 
 % expand above syntax
-{dict.server.expand}
+[dict.server.expand]
 
 %===========================================================================================
 
 
-{version}
+[version]
 alias = 'v|version'
 eg1.input = v|1.0.0
 eg1.expand = {
@@ -147,5 +150,8 @@ ipv6 = re|^([\da-fA-F]{1,4}:){7}[\da-fA-F]{1,4}$
 table = csv```
 a,1
 ```
+
+
+[[arc]]
 
 

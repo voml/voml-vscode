@@ -1,5 +1,5 @@
 const integer = {
-    match: '(?<!\\w)((?:[\\+\\-]?(0|([1-9](([0-9]|_[0-9])+)?))))(?!\\w)',
+    match: /(?<!\w)((?:[\+\-]?(0|([1-9](([0-9]|_[0-9])+)?))))(?!\w)/.source,
     captures: {
         1: {
             name: 'constant.numeric.integer.arc',
