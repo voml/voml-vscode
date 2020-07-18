@@ -1,5 +1,5 @@
 {
-	"version": "v0.2.0",
+	"version": "v0.4.0",
 	"scopeName": "source.arc",
 	"uuid": "6267dad2-7d52-462a-a1ef-7e3da7378a7d",
 	"information_for_contributors": [
@@ -27,7 +27,7 @@
 		"patterns": [
 		  {
 			"name": "comment.block.arc",
-			"begin": "(?=[^\\\\])(%%%)",
+			"begin": "(%%%)",
 			"beginCaptures": {
 			  "1": {
 				"name": "punctuation.definition.comment.block.arc"
@@ -47,7 +47,7 @@
 		  },
 		  {
 			"name": "comment.line.arc",
-			"match": "(%).*$",
+			"match": "(%).*$\\n?",
 			"captures": {
 			  "1": {
 				"name": "punctuation.definition.comment.line.arc"
@@ -150,8 +150,11 @@
 			"begin": "\\s*([A-Za-z0-9\\._\"']+)\\s*(=|:)\\s*",
 			"beginCaptures": {
 			  "1": {
-				"match": "[A-Za-z_][A-Za-z0-9_]*|\".*\"|'.*'|[0-9]+",
-				"name": "entity.name.tag.arc"
+				"patterns": [
+				  {
+					"include": "#key"
+				  }
+				]
 			  },
 			  "2": {
 				"name": "punctuation.definition.record.arc"
@@ -183,6 +186,18 @@
 				"include": "#illegal"
 			  }
 			]
+		  }
+		]
+	  },
+	  "key": {
+		"patterns": [
+		  {
+			"name": "entity.name.tag.arc",
+			"match": "([A-Za-z_][A-Za-z0-9_]*)"
+		  },
+		  {
+			"name": "string.key.arc",
+			"match": "(\".*\"|'.*'|[0-9]+)"
 		  }
 		]
 	  },
@@ -289,58 +304,57 @@
 	  "number": {
 		"patterns": [
 		  {
-			"match": "(?<!\\w)([\\+\\-]?(0|([1-9](([0-9]|_[0-9])+)?))(?:(?:\\.(0|([1-9](([0-9]|_[0-9])+)?)))?[eE][\\+\\-]?[1-9]_?[0-9]*|(?:\\.[0-9_]*)))(?!\\w)",
-			"captures": {
-			  "1": {
-				"name": "constant.numeric.float.arc"
-			  }
-			}
-		  },
-		  {
-			"match": "(?<!\\w)((?:[\\+\\-]?(0|([1-9](([0-9]|_[0-9])+)?))))(?!\\w)",
-			"captures": {
-			  "1": {
-				"name": "constant.numeric.integer.arc"
-			  }
-			}
-		  },
-		  {
-			"match": "(?<!\\w)([\\+\\-]?inf)(?!\\w)",
-			"captures": {
-			  "1": {
-				"name": "constant.numeric.inf.arc"
-			  }
-			}
-		  },
-		  {
-			"match": "(?<!\\w)([\\+\\-]?nan)(?!\\w)",
-			"captures": {
-			  "1": {
-				"name": "constant.numeric.nan.arc"
-			  }
-			}
-		  },
-		  {
-			"match": "(?<!\\w)((?:0x(([0-9a-fA-F](([0-9a-fA-F]|_[0-9a-fA-F])+)?))))(?!\\w)",
+			"match": "(?<!\\w)(0x[0-9a-fA-F]+)(_[A-Za-z][A-Za-z0-9_]*)?(?!\\w)",
 			"captures": {
 			  "1": {
 				"name": "constant.numeric.hex.arc"
+			  },
+			  "2": {
+				"name": "keyword.control.handler.byte.arc"
 			  }
 			}
 		  },
 		  {
-			"match": "(?<!\\w)(0o[0-7](_?[0-7])*)(?!\\w)",
+			"match": "(?<!\\w)(0o[0-7]+)(_[A-Za-z][A-Za-z0-9_]*)?(?!\\w)",
 			"captures": {
 			  "1": {
 				"name": "constant.numeric.oct.arc"
+			  },
+			  "2": {
+				"name": "keyword.control.handler.byte.arc"
 			  }
 			}
 		  },
 		  {
-			"match": "(?<!\\w)(0b[01](_?[01])*)(?!\\w)",
+			"match": "(?<!\\w)(0b[01]+)(_[A-Za-z][A-Za-z0-9_]*)?(?!\\w)",
 			"captures": {
 			  "1": {
 				"name": "constant.numeric.bin.arc"
+			  },
+			  "2": {
+				"name": "keyword.control.handler.byte.arc"
+			  }
+			}
+		  },
+		  {
+			"match": "(?<!\\w)([\\+\\-]?(0|([1-9](([0-9]|_[0-9])+)?))(?:(?:\\.(0|([1-9](([0-9]|_[0-9])+)?)))?[eE][\\+\\-]?[1-9]_?[0-9]*|(?:\\.[0-9_]*)))([A-Za-z][A-Za-z0-9_]*)?(?!\\w)",
+			"captures": {
+			  "1": {
+				"name": "constant.numeric.float.arc"
+			  },
+			  "10": {
+				"name": "keyword.control.handler.number.arc"
+			  }
+			}
+		  },
+		  {
+			"match": "(?<!\\w)((?:[\\+\\-]?(0|([1-9](([0-9]|_[0-9])+)?))))([A-Za-z_][A-Za-z0-9_]*)?(?!\\w)",
+			"captures": {
+			  "1": {
+				"name": "constant.numeric.integer.arc"
+			  },
+			  "6": {
+				"name": "keyword.control.handler.number.arc"
 			  }
 			}
 		  }
@@ -350,7 +364,7 @@
 		"patterns": [
 		  {
 			"name": "string.quoted.block.arc",
-			"begin": "\\b(r)\\b\\s*(```)",
+			"begin": "([A-Za-z_][A-Za-z0-9_]*)?\\s*(''')",
 			"beginCaptures": {
 			  "1": {
 				"name": "keyword.control.handler.string.arc"
@@ -359,7 +373,7 @@
 				"name": "punctuation.definition.string.block.arc"
 			  }
 			},
-			"end": "(```)",
+			"end": "(''')",
 			"endCaptures": {
 			  "1": {
 				"name": "punctuation.definition.string.block.arc"
@@ -368,7 +382,7 @@
 		  },
 		  {
 			"name": "string.quoted.block.arc",
-			"begin": "([a-zA-Z]*)\\s*(```)",
+			"begin": "([A-Za-z_][A-Za-z0-9_]*)?\\s*(\"\"\")",
 			"beginCaptures": {
 			  "1": {
 				"name": "keyword.control.handler.string.arc"
@@ -377,7 +391,7 @@
 				"name": "punctuation.definition.string.block.arc"
 			  }
 			},
-			"end": "(```)",
+			"end": "(\"\"\")",
 			"endCaptures": {
 			  "1": {
 				"name": "punctuation.definition.string.block.arc"
@@ -395,20 +409,24 @@
 			]
 		  },
 		  {
-			"name": "string.quoted.single.arc",
-			"match": "\\b(r)\\b\\s*(\"[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*\"|\\'[^'\\\\]*(?:\\\\.[^'\\\\]*)*\\')",
+			"match": "([A-Za-z_][A-Za-z0-9_]*)?\\s*(\\'[^'\\\\]*(?:\\\\.[^'\\\\]*)*\\')",
 			"captures": {
 			  "1": {
 				"name": "keyword.control.handler.string.arc"
+			  },
+			  "2": {
+				"name": "string.quoted.single.arc"
 			  }
 			}
 		  },
 		  {
-			"name": "string.quoted.single.arc",
-			"match": "([a-zA-Z]*)\\s*(\"[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*\"|\\'[^'\\\\]*(?:\\\\.[^'\\\\]*)*\\')",
+			"match": "([A-Za-z_][A-Za-z0-9_]*)?\\s*(\"[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*\")",
 			"captures": {
 			  "1": {
 				"name": "keyword.control.handler.string.arc"
+			  },
+			  "2": {
+				"name": "string.quoted.single.arc"
 			  }
 			},
 			"patterns": [
@@ -423,11 +441,7 @@
 			]
 		  },
 		  {
-			"name": "constant.character.arc",
-			"match": "`.?`"
-		  },
-		  {
-			"match": "([a-zA-Z]*)\\s*((\\|).*)$",
+			"match": "([A-Za-z_][A-Za-z0-9_]*)?\\s*((\\|).*)$",
 			"captures": {
 			  "1": {
 				"name": "keyword.control.handler.string.arc"
@@ -436,19 +450,15 @@
 				"name": "string.raw.arc"
 			  },
 			  "3": {
-				"name": "punctuation.definition.string.arc"
+				"name": "keyword.control.handler.string.arc"
 			  }
 			}
 		  }
 		]
 	  },
 	  "illegal": {
-		"match": "(.*)",
-		"captures": {
-		  "1": {
-			"name": "invalid.illegal.arc"
-		  }
-		}
+		"name": "comment.invalid.illegal.arc",
+		"match": ".*"
 	  }
 	}
   }

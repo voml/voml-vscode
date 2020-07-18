@@ -8,7 +8,7 @@ import json "package.json" as pkg
 %%%
 
 
-[literal.integer]
+[integer]
 int1 =+99
 int2 = 42
 int3 = 0
@@ -16,19 +16,49 @@ int4 =-17
 int5 = 1_000
 int6 = 1_2_3_4_5
 
-[literal.decimal]
+[integer_typed]
+int1 =+99i32
+int2 = 42u32
+int3 = 0u8
+int4 =-17i8
+int5 = 1_000u64
+int6 = 1_2_3_4_5i64
+
+
+[decimal]
 flt1 = 0.
 flt2 =-0.0_2
 flt3 =+5_0.
 flt4 = 3.1415
 flt5 =-0.01
 flt6 = 224_617.445_991_228
+flt7 = 1e5
+
+[decimal_typed]
+flt1 = 0.0f32
+flt2 =-0.0_2
+flt3 =+5_0.
+flt4 = 3.1415
+flt5 =-0.01
+flt6 = 224_617.445_991_228
+flt7 = 1e5e5
+
+
+[byte]
+hex1 = 0x00
+oct1 = 0o00
+bin1 = 0b00
+
+[byte_typed]
+hex1 = 0x00_f32
+oct1 = 0o00_f64
+bin1 = 0b00_f64
 
 
 [string]
-char = `2`
+singleline = 'This is a string.'
 singleline = "This is a string."
-multiline = ```
+multiline = """
 \b     - backspace       (U+0008)
 \t     - tab             (U+0009)
 \n     - linefeed        (U+000A)
@@ -38,9 +68,9 @@ multiline = ```
 \/     - slash           (U+002F)
 \\     - backslash       (U+005C)
 \u1234 - unicode         (U+1234)
-```
+"""
 
-literal = r```
+literal = '''
 \b     - backspace       (U+0008)
 \t     - tab             (U+0009)
 \n     - linefeed        (U+000A)
@@ -50,7 +80,34 @@ literal = r```
 \/     - slash           (U+002F)
 \\     - backslash       (U+005C)
 \u1234 - unicode         (U+1234)
-```
+'''
+
+[string_typed]
+singleline = f'This is a string.'
+singleline = f"This is a string."
+multiline = f"""
+\b     - backspace       (U+0008)
+\t     - tab             (U+0009)
+\n     - linefeed        (U+000A)
+\f     - form feed       (U+000C)
+\r     - carriage return (U+000D)
+\"     - quote           (U+0022)
+\/     - slash           (U+002F)
+\\     - backslash       (U+005C)
+\u1234 - unicode         (U+1234)
+"""
+
+literal = f'''
+\b     - backspace       (U+0008)
+\t     - tab             (U+0009)
+\n     - linefeed        (U+000A)
+\f     - form feed       (U+000C)
+\r     - carriage return (U+000D)
+\"     - quote           (U+0022)
+\/     - slash           (U+002F)
+\\     - backslash       (U+005C)
+\u1234 - unicode         (U+1234)
+'''
 
 
 [list.inline]
@@ -99,7 +156,6 @@ dict = [
     {name = 'Banana', color = 'yellow'},
     {name = 'apple', color = 'red'}
 ]
-
 %===========================================================================================
 
 [dict.server]
@@ -144,12 +200,8 @@ ipv6 = re|^([\da-fA-F]{1,4}:){7}[\da-fA-F]{1,4}$
 
 
 
-{Embed}
-table = csv```
+[Embed]
+table = csv'''
 a,1
-```
-
-
-[[arc]]
-
+'''
 
